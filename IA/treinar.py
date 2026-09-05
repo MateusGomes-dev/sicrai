@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 16
 EPOCHS = 15
-DATASET_DIR = r"C:\Users\pdv\Downloads\dataset"
+DATASET_DIR = r"C:\Users\pehfe\Downloads\SicraiIA\dataset"
 
 # ----------------------------
 # 1. Preparar os dados com augmentation
