@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 16
 EPOCHS = 15
-DATASET_DIR = r"C:\Users\pehfe\Downloads\SicraiIA\dataset"
+DATASET_DIR = r"C:\Users\pdv\Downloads\dataset"
 
 # ----------------------------
 # 1. Preparar os dados com augmentation
@@ -110,6 +110,74 @@ history_fine = model.fit(
 )
 
 # ----------------------------
+# 5. Plotar Loss e Accuracy
+# ----------------------------
+import matplotlib.pyplot as plt
+
+# Quantidade de épocas da primeira fase
+fase1_epochs = len(history.history["loss"])
+
+# Histórico da primeira fase
+loss = history.history["loss"] + history_fine.history["loss"]
+val_loss = history.history["val_loss"] + history_fine.history["val_loss"]
+
+accuracy = history.history["accuracy"] + history_fine.history["accuracy"]
+val_accuracy = history.history["val_accuracy"] + history_fine.history["val_accuracy"]
+
+# Eixo X
+epochs = range(1, len(loss) + 1)
+
+# Criar figura
+plt.figure(figsize=(12, 5))
+
+# ----------------------------
+# Gráfico de Loss
+# ----------------------------
+plt.subplot(1, 2, 1)
+
+plt.plot(epochs, loss, "b-", label="Train Loss")
+plt.plot(epochs, val_loss, "r-", label="Validation Loss")
+
+# Linha indicando início do Fine-tuning
+plt.axvline(
+    x=fase1_epochs + 0.5,
+    color="gray",
+    linestyle="--",
+    label="Início Fine-tuning"
+)
+
+plt.title("Loss ao longo das épocas")
+plt.xlabel("Épocas")
+plt.ylabel("Loss")
+plt.legend()
+plt.grid(True)
+
+# ----------------------------
+# Gráfico de Accuracy
+# ----------------------------
+plt.subplot(1, 2, 2)
+
+plt.plot(epochs, accuracy, "b-", label="Train Accuracy")
+plt.plot(epochs, val_accuracy, "r-", label="Validation Accuracy")
+
+# Linha indicando início do Fine-tuning
+plt.axvline(
+    x=fase1_epochs + 0.5,
+    color="gray",
+    linestyle="--",
+    label="Início Fine-tuning"
+)
+
+plt.title("Accuracy ao longo das épocas")
+plt.xlabel("Épocas")
+plt.ylabel("Accuracy")
+plt.legend()
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig("grafico_loss_accuracy.png", dpi=150)
+plt.show()
+# ----------------------------
 # 5. Avaliar no conjunto de TESTE (dados que o modelo nunca viu)
 # ----------------------------
 test_datagen = ImageDataGenerator(rescale=1.0 / 255)
@@ -128,5 +196,5 @@ print(f"\nResultado no conjunto de teste -> loss: {test_loss:.4f} | acurácia: {
 # ----------------------------
 # 6. Salvar o modelo treinado
 # ----------------------------
-model.save("classificador_latinha_01.keras")
-print("Modelo salvo como classificador_latinha01.keras")
+model.save("classificador_latinha_Teste_MobileNet.keras") 
+print("Modelo salvo como classificador_latinha_Teste_MobileNet.keras")
