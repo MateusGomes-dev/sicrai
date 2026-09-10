@@ -150,7 +150,7 @@ plt.legend()
 plt.grid(True)
 
 plt.tight_layout()
-plt.savefig("grafico_config2.png", dpi=150)
+plt.savefig("grafico_loss_accuracy_MobNet_2.png", dpi=150)
 plt.show()
 
 # ----------------------------
