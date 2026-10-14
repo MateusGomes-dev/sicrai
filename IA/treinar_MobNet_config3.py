@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 16
 EPOCHS = 15
-DATASET_DIR = r"C:\Users\pdv\Downloads\dataset"
+DATASET_DIR = r"D:\Users\0081864\Downloads\SicraiIA\SicraiIA\dataset"
 
 # ----------------------------
 # 1. Preparar os dados com augmentation
@@ -78,7 +78,7 @@ model.summary()
 # 3. Treinar (Fase 1 - base congelada)
 # ----------------------------
 early_stop_fase1 = tf.keras.callbacks.EarlyStopping(
-    monitor="val_loss", patience=4, restore_best_weights=True
+    monitor="val_loss", patience=7, restore_best_weights=True
 )
 
 history = model.fit(
@@ -102,12 +102,12 @@ model.compile(
 )
 
 early_stop_fase2 = tf.keras.callbacks.EarlyStopping(
-    monitor="val_loss", patience=4, restore_best_weights=True
+    monitor="val_loss", patience=7, restore_best_weights=True
 )
 
 history_fine = model.fit(
     train_generator,
-    epochs=15,
+    epochs=25,
     validation_data=val_generator,
     callbacks=[early_stop_fase2],
 )
@@ -172,5 +172,5 @@ print(f"\nResultado no conjunto de teste -> loss: {test_loss:.4f} | acurácia: {
 # ----------------------------
 # 7. Salvar o modelo treinado
 # ----------------------------
-model.save("classificador_latinha_MobNet_3.keras")
-print("Modelo salvo como classificador_latinha_MobNet_3.keras")
+model.save("classificador_latinha_MobNet_3_25_epochs.keras")
+print("Modelo salvo como classificador_latinha_MobNet_3_25_epochs.keras")
