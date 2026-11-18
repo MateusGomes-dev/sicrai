@@ -31,11 +31,11 @@ from sklearn.metrics import (
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 16
 DATASET_DIR = r"D:\Users\0081864\Downloads\SicraiIA\SicraiIA\dataset"
-MODEL_PATH = "classificador_latinha02.keras"
+MODEL_PATH = "classificador_latinha_MobNet_3.keras"
 
 # Se o seu modelo foi treinado com rescale=1./255 (MobileNetV2), deixe True.
 # Se for o EfficientNetB0 (sem rescale), mude para False.
-USAR_RESCALE = False
+USAR_RESCALE = True
 
 
 def montar_test_generator():
@@ -158,8 +158,8 @@ def avaliar_modelo():
 
     fig.colorbar(im, ax=ax)
     fig.tight_layout()
-    fig.savefig("matriz_confusao02.png", dpi=150)
-    print("\nImagem da matriz de confusão salva como 'matriz_confusao02.png'")
+    fig.savefig("matriz_confusao_config3.png", dpi=150)
+    print("\nImagem da matriz de confusão salva como 'matriz_confusao_config3.png'")
 
     return {
         "acuracia": acc,
