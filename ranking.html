@@ -195,9 +195,11 @@
 
     <script>
         async function carregarRanking() {
-            // Só usuário padrão e admin acessam o ranking.
             const acesso = await protegerPagina(["usuario", "admin"]);
-            if (!acesso) return;
+            if (!acesso) {
+                window.location.href = "ErroDeAcesso.html";
+                return;
+            }
 
             const userId = acesso.session.user.id;
 

@@ -17,12 +17,12 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- LEAFLET (mapa real, gratuito, sem chave de API) -->
+    <!-- LEAFLET -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
 
-        /* ===== LAYOUT DO MAPA ===== */
+        /*LAYOUT DO MAPA*/
 
         .mapa-wrapper{
             background:white;
@@ -168,7 +168,7 @@
             display:inline-block;
         }
 
-        /* ===== POPUP DO MARCADOR ===== */
+        /*POPUP DO MARCADOR ===== */
 
         .popup-maquina{
             font-family:"Poppins",sans-serif;
@@ -219,7 +219,7 @@
             color:#249341;
         }
 
-        /* ===== MODAL ADICIONAR MÁQUINA ===== */
+        /*ADICIONAR MÁQUINA*/
 
         .modal-overlay{
             position:fixed;
@@ -419,7 +419,7 @@
 
         <div class="topbar">
             <div>
-                <h1>🗺️ Mapa de Máquinas</h1>
+                <h1>Mapa de Máquinas</h1>
                 <p>Busque um endereço ou clique no mapa para posicionar uma nova máquina.</p>
             </div>
         </div>
@@ -435,11 +435,6 @@
                 <button id="btnMinhaLocalizacao"><i class="fa-solid fa-location-crosshairs"></i> Minha localização</button>
             </div>
 
-            <p class="dica-mapa" id="dicaMapa">
-                <i class="fa-solid fa-circle-info"></i>
-                Dica: clique em qualquer ponto do mapa para adicionar uma máquina naquele local exato.
-            </p>
-
             <div id="mapaMaquinas"></div>
 
             <div class="legenda">
@@ -451,11 +446,7 @@
 
     </main>
 
-    <!-- NOTIFICAÇÕES -->
-
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- MODAL ADICIONAR MÁQUINA -->
+    <!-- ADICIONAR MÁQUINA -->
 
     <div class="modal-overlay" id="modalAdicionar">
 
@@ -498,7 +489,7 @@
         let coordenadaSelecionada = null;
         const marcadoresMaquinas = [];
 
-        // Centro inicial do mapa: Ouro Branco, MG
+        // Mapa começa em OB
         const CENTRO_PADRAO = [-20.5197, -43.6905];
 
         // mostrarToast() e confirmarAcao() vêm de assets/js/toast.js
@@ -517,7 +508,7 @@
             });
         }
 
-        let podeAdicionarMaquina = false; // definido em iniciar(), conforme o papel do usuário
+        let podeAdicionarMaquina = false; 
 
         function inicializarMapa() {
             map = L.map("mapaMaquinas").setView(CENTRO_PADRAO, 14);
@@ -527,9 +518,7 @@
                 attribution: "&copy; OpenStreetMap contributors"
             }).addTo(map);
 
-            // Clique no mapa = adicionar máquina naquele ponto
-            // (só disponível para administradores — usuário padrão e
-            // catador só podem visualizar as máquinas no mapa)
+            // Clicar no mapa adiciona maquina
             if (podeAdicionarMaquina) {
                 map.on("click", (e) => {
                     abrirModalNaCoordenada(e.latlng.lat, e.latlng.lng, "Local selecionado no mapa");
@@ -537,9 +526,7 @@
             }
         }
 
-        /* =====================================
-           SUGESTÕES DE BUSCA (autocomplete, como no Google)
-        ===================================== */
+        /* SUGESTÕES DE BUSCA */
 
         const listaSugestoes = document.getElementById("sugestoesLista");
         const campoBusca = document.getElementById("campoBusca");
@@ -665,9 +652,7 @@
             }
         });
 
-        /* =====================================
-           BUSCAR ENDEREÇO (geocodificação gratuita via Nominatim)
-        ===================================== */
+        /* BUSCAR ENDEREÇO - Nominatim */
 
         async function buscarEndereco() {
             const termo = document.getElementById("campoBusca").value.trim();
@@ -719,9 +704,7 @@
             });
         });
 
-        /* =====================================
-           MODAL - ADICIONAR MÁQUINA
-        ===================================== */
+        /* ADICIONAR MÁQUINA*/
 
         function abrirModalNaCoordenada(lat, lng, descricao) {
             coordenadaSelecionada = { lat, lng, descricao };
@@ -797,9 +780,7 @@
             await carregarMaquinasNoMapa();
         });
 
-        /* =====================================
-           CARREGAR MÁQUINAS DO SUPABASE NO MAPA
-        ===================================== */
+        /* CARREGAR MÁQUINAS DO SUPABASE NO MAPA */
 
         async function carregarMaquinasNoMapa() {
 
@@ -844,28 +825,18 @@
             });
         }
 
-        /* =====================================
-           INICIALIZAÇÃO / PROTEÇÃO DE PÁGINA
-        ===================================== */
+        /* PROTEÇÃO DE PÁGINA */
 
         async function iniciar() {
             const acesso = await protegerPagina(["usuario", "catador", "admin"]);
-            if (!acesso) return;
+            if (!acesso) {
+                window.location.href = "ErroDeAcesso.html";
+                return;
+            }
 
             podeAdicionarMaquina = acesso.perfil.role === "admin";
 
-            // Ajusta a dica do topo do mapa conforme o que o usuário pode fazer
-            const dica = document.getElementById("dicaMapa");
-            if (dica) {
-                dica.innerHTML = podeAdicionarMaquina
-                    ? `<i class="fa-solid fa-circle-info"></i> Dica: clique em qualquer ponto do mapa para adicionar uma máquina naquele local exato.`
-                    : `<i class="fa-solid fa-circle-info"></i> Aqui você pode visualizar as máquinas de coleta perto de você.`;
-            }
-
-            document.getElementById("logoutBtn").addEventListener("click", async () => {
-                await client.auth.signOut();
-                window.location.href = "login.html";
-            });
+            document.getElementById("logoutBtn").addEventListener("click", async () => {await client.auth.signOut();window.location.href = "login.html";});
 
             inicializarMapa();
             await carregarMaquinasNoMapa();

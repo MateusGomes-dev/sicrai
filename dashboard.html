@@ -183,19 +183,18 @@
     <script src="assets/js/role-guard.js"></script>
 
     <script>
-        // Dark mode persistente
         if (localStorage.getItem("tema") === "dark") {
             document.body.classList.add("dark");
         }
 
-        async function checkUser() {
-            // Só usuário padrão e admin acessam o dashboard comum.
-            // Catador é redirecionado para a tela de máquinas.
+        async function iniciar() {
             const acesso = await protegerPagina(["usuario", "admin"]);
-            if (!acesso) return;
+            if (!acesso) {
+                window.location.href = "ErroDeAcesso.html";
+                return;
+            }
         }
-
-        checkUser();
+        iniciar();
 
         document
             .getElementById("logoutBtn")

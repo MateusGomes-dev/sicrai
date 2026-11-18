@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,88 +9,244 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/toast.css">
+    <link rel="stylesheet" href="assets/css/cadastro.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
 
-    <div class="auth-container">
+    <main class="cadastro-page">
 
-        <div class="auth-card">
+        <!-- LADO ESQUERDO -->
+        <section class="cadastro-brand">
 
-            <div class="auth-logo">
-                <i class="fa-solid fa-recycle"></i>
-                <h2>SICRAI</h2>
+            <div class="brand-content">
+
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-recycle"></i>
+                    </div>
+
+                    <span>SICRAI</span>
+                </div>
+
+                <div class="brand-text">
+                    <h1>
+                        Recicle hoje.
+                        <span>Transforme o amanhã.</span>
+                    </h1>
+
+                    <p>
+                        Faça parte de uma reciclagem mais inteligente,
+                        sustentável e conectada.
+                    </p>
+                </div>
+
+                <div class="brand-info">
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-recycle"></i>
+                        <span>Recicle e ajude o meio ambiente</span>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Ganhe pontos pelas suas reciclagens</span>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Encontre pontos de coleta</span>
+                    </div>
+
+                </div>
+
             </div>
 
-            <h1>Criar Conta</h1>
-
-            <p>Cadastre-se e comece a ganhar recompensas.</p>
-
-            <form id="cadastroForm">
-
-                <div class="input-group">
-                    <label>Nome Completo</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        placeholder="Digite seu nome"
-                        required>
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Digite seu email"
-                        required>
-                </div>
-
-                <div class="input-group">
-                    <label>Senha</label>
-                    <input
-                        type="password"
-                        id="senha"
-                        placeholder="Digite sua senha"
-                        required>
-                </div>
-
-                <div class="input-group">
-                    <label>Confirmar Senha</label>
-                    <input
-                        type="password"
-                        id="confirmarSenha"
-                        placeholder="Confirme sua senha"
-                        required>
-                </div>
-
-                <button type="submit" class="btn-primary auth-btn">
-                    Criar Conta
-                </button>
-
-            </form>
-
-            <div class="auth-links">
-                <a href="login.html">Já possuo conta</a>
+            <div class="brand-footer">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Tecnologia a favor da sustentabilidade</span>
             </div>
 
-            <div class="back-home">
-                <a href="index.html">
+        </section>
+
+        <!-- LADO DIREITO -->
+        <section class="cadastro-area">
+
+            <div class="cadastro-card">
+
+                <div class="cadastro-header">
+
+                    <span class="welcome-label">
+                        CRIE SUA CONTA
+                    </span>
+
+                    <h2>Criar conta</h2>
+
+                    <p>
+                        Cadastre-se e comece a ganhar recompensas.
+                    </p>
+
+                </div>
+
+                <form id="cadastroForm">
+
+                    <div class="input-group">
+
+                        <label for="nome">
+                            Nome Completo
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="nome"
+                                placeholder="Digite seu nome"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="cpf">CPF</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                id="cpf"
+                                name="cpf"
+                                placeholder="000.000.000-00"
+                                inputmode="numeric"
+                                autocomplete="off"
+                                maxlength="14"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Digite seu email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="senha">
+                            Senha
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="senha"
+                                placeholder="Digite sua senha"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="toggleSenha"
+                                aria-label="Mostrar senha"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="confirmarSenha">
+                            Confirmar Senha
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="confirmarSenha"
+                                placeholder="Confirme sua senha"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="toggleConfirmarSenha"
+                                aria-label="Mostrar senha"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="cadastro-button"
+                        id="cadastroButton"
+                    >
+                        <span>Criar conta</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+                <div class="login-link">
+                    <span>Já possui uma conta?</span>
+                    <a href="login.html">
+                        Entrar
+                    </a>
+                </div>
+
+                <a href="index.html" class="back-home">
                     <i class="fa-solid fa-arrow-left"></i>
-                    Voltar ao início
+                    <span>Voltar ao início</span>
                 </a>
+
             </div>
 
-        </div>
+        </section>
 
-    </div>
+    </main>
 
     <div class="toast-container" id="toastContainer"></div>
 
@@ -107,40 +262,209 @@
 
                 e.preventDefault();
 
-                const nome = document.getElementById("nome").value;
-                const email = document.getElementById("email").value;
-                const senha = document.getElementById("senha").value;
-                const confirmar = document.getElementById("confirmarSenha").value;
+                const nome =
+                    document.getElementById("nome").value;
+
+                const cpfInput = document.getElementById("cpf");
+                const cpf = cpfInput.value.replace(/\\D/g, "");
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const senha =
+                    document.getElementById("senha").value;
+
+                const confirmar =
+                    document.getElementById("confirmarSenha").value;
+
+                const cadastroButton =
+                    document.getElementById("cadastroButton");
+
+                if (!validarCPF(cpf)) {
+                    mostrarToast(
+                        "Digite um CPF válido com 11 números.",
+                        "aviso"
+                    );
+                    cpfInput.focus();
+                    return;
+                }
 
                 if (senha.length < 6) {
-                    mostrarToast("A senha deve possuir pelo menos 6 caracteres.", "aviso");
+
+                    mostrarToast(
+                        "A senha deve possuir pelo menos 6 caracteres.",
+                        "aviso"
+                    );
+
                     return;
                 }
 
                 if (senha !== confirmar) {
-                    mostrarToast("As senhas não coincidem.", "aviso");
+
+                    mostrarToast(
+                        "As senhas não coincidem.",
+                        "aviso"
+                    );
+
                     return;
                 }
 
-                const { data, error } = await client.auth.signUp({
-                    email,
-                    password: senha,
-                    options: {
-                        data: { nome }
-                    }
-                });
+                cadastroButton.disabled = true;
+
+                cadastroButton.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <span>Criando conta...</span>
+                `;
+
+                const { data, error } =
+                    await client.auth.signUp({
+
+                        email,
+
+                        password: senha,
+
+                        options: {
+                            data: {
+                                nome,
+                                cpf
+                            }
+                        }
+
+                    });
 
                 if (error) {
-                    mostrarToast(error.message, "erro");
+
+                    mostrarToast(
+                        error.message,
+                        "erro"
+                    );
+
+                    cadastroButton.disabled = false;
+
+                    cadastroButton.innerHTML = `
+                        <span>Criar conta</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    `;
+
                     return;
                 }
 
-                mostrarToast("Cadastro realizado com sucesso!", "sucesso");
+                mostrarToast(
+                    "Cadastro realizado com sucesso!",
+                    "sucesso"
+                );
+
                 setTimeout(() => {
-                    window.location.href = "login.html";
+
+                    window.location.href =
+                        "login.html";
+
                 }, 1500);
 
             });
+
+
+        // Formata o CPF enquanto o usuário digita.
+        const cpfInput = document.getElementById("cpf");
+
+        cpfInput.addEventListener("input", () => {
+            let valor = cpfInput.value.replace(/\\D/g, "").slice(0, 11);
+
+            valor = valor.replace(/(\\d{3})(\\d)/, "$1.$2");
+            valor = valor.replace(/(\\d{3})(\\d)/, "$1.$2");
+            valor = valor.replace(/(\\d{3})(\\d{1,2})$/, "$1-$2");
+
+            cpfInput.value = valor;
+        });
+
+        // Verifica os dígitos verificadores do CPF.
+        function validarCPF(cpf) {
+            if (!/^\\d{11}$/.test(cpf)) return false;
+            if (/^(\\d)\\1{10}$/.test(cpf)) return false;
+
+            let soma = 0;
+            for (let i = 0; i < 9; i++) {
+                soma += Number(cpf[i]) * (10 - i);
+            }
+
+            let resto = (soma * 10) % 11;
+            if (resto === 10) resto = 0;
+            if (resto !== Number(cpf[9])) return false;
+
+            soma = 0;
+            for (let i = 0; i < 10; i++) {
+                soma += Number(cpf[i]) * (11 - i);
+            }
+
+            resto = (soma * 10) % 11;
+            if (resto === 10) resto = 0;
+
+            return resto === Number(cpf[10]);
+        }
+
+
+        function configurarMostrarSenha(
+            botaoId,
+            inputId
+        ) {
+
+            const botao =
+                document.getElementById(botaoId);
+
+            const input =
+                document.getElementById(inputId);
+
+            botao.addEventListener("click", () => {
+
+                const tipo =
+                    input.getAttribute("type");
+
+                if (tipo === "password") {
+
+                    input.setAttribute(
+                        "type",
+                        "text"
+                    );
+
+                    botao.innerHTML =
+                        '<i class="fa-solid fa-eye-slash"></i>';
+
+                    botao.setAttribute(
+                        "aria-label",
+                        "Ocultar senha"
+                    );
+
+                } else {
+
+                    input.setAttribute(
+                        "type",
+                        "password"
+                    );
+
+                    botao.innerHTML =
+                        '<i class="fa-solid fa-eye"></i>';
+
+                    botao.setAttribute(
+                        "aria-label",
+                        "Mostrar senha"
+                    );
+
+                }
+
+            });
+
+        }
+
+
+        configurarMostrarSenha(
+            "toggleSenha",
+            "senha"
+        );
+
+        configurarMostrarSenha(
+            "toggleConfirmarSenha",
+            "confirmarSenha"
+        );
 
     </script>
 

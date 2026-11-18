@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acesso Negado | SICRAI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Poppins", sans-serif;
+            background: #f4f8f6;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .access-container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .access-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(30, 110, 70, 0.10);
+            border: 1px solid #e5eee9;
+        }
+
+        .icon-container {
+            width: 82px;
+            height: 82px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: #e8f5ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lock-icon {
+            width: 42px;
+            height: 42px;
+            fill: none;
+            stroke: #16834b;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .access-card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #173b29;
+            margin-bottom: 12px;
+        }
+
+        .access-card p {
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-button {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 22px;
+            background: #16834b;
+            color: #ffffff;
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .dashboard-button:hover {
+            background: #116b3d;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(22, 131, 75, 0.25);
+        }
+
+        .dashboard-button:active {
+            transform: translateY(0);
+        }
+
+        .logo {
+            margin-top: 22px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #8a9a91;
+        }
+
+        .logo span {
+            color: #16834b;
+            font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+
+            .access-card {
+                padding: 35px 24px;
+                border-radius: 16px;
+            }
+
+            .icon-container {
+                width: 72px;
+                height: 72px;
+                margin-bottom: 20px;
+            }
+
+            .lock-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .access-card h1 {
+                font-size: 24px;
+            }
+
+            .access-card p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="access-container">
+
+        <section class="access-card">
+
+            <div class="icon-container">
+                <svg class="lock-icon" viewBox="0 0 24 24">
+                    <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                    <circle cx="12" cy="15.5" r="1"></circle>
+                    <path d="M12 16.5v2"></path>
+                </svg>
+            </div>
+
+            <h1>Acesso negado</h1>
+
+            <p>
+                Você não tem permissão para acessar esta página.
+            </p>
+
+            <button class="dashboard-button" onclick="voltarParaDashboard()">
+                Voltar para home
+            </button>
+
+        </section>
+
+        <div class="logo">
+            <span>SICRAI</span> — Sistema Inteligente de Coleta e Reciclagem
+        </div>
+
+    </main>
+
+    <script>
+        function voltarParaDashboard() {
+            window.location.href = "dashboard.html";
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1424,3 +1424,89 @@ footer{
     cursor:pointer;
 
 }
+
+/* ==========================
+   MENU MOBILE
+========================== */
+
+.nav-mobile-only{
+    display:none;
+}
+
+.menu-mobile{
+    user-select:none;
+}
+
+@media(max-width:850px){
+
+    .nav-links.active{
+        display:flex;
+        flex-direction:column;
+        gap:18px;
+
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+
+        padding:25px 5%;
+
+        background:rgba(255,255,255,.97);
+        backdrop-filter:blur(15px);
+
+        box-shadow:0 15px 30px rgba(0,0,0,.08);
+    }
+
+    .nav-links.active .nav-mobile-only{
+        display:block;
+    }
+
+    .nav-links.active .nav-mobile-only a{
+        display:block;
+        text-align:center;
+    }
+
+}
+
+/* ==========================
+   BOTÃO VOLTAR AO TOPO
+========================== */
+
+.btn-top{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+
+    width:48px;
+    height:48px;
+
+    border:none;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+    color:white;
+    font-size:1.1rem;
+
+    background:linear-gradient(
+    135deg,
+    var(--primary-green),
+    var(--light-green)
+    );
+
+    box-shadow:0 8px 20px rgba(36,147,65,.35);
+
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+
+    z-index:900;
+}
+
+.btn-top.visivel{
+    opacity:1;
+    pointer-events:auto;
+}

@@ -269,7 +269,10 @@
 
         async function iniciar() {
             const acesso = await protegerPagina(["catador", "admin"]);
-            if (!acesso) return;
+            if (!acesso) {
+                window.location.href = "ErroDeAcesso.html";
+                return;
+            }
 
             document.getElementById("logoutBtn").addEventListener("click", async () => {
                 await client.auth.signOut();

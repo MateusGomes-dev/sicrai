@@ -43,11 +43,6 @@
 
         <nav>
 
-            <a href="mapa.html">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <span class="link-text">Mapa</span>
-            </a>
-            
             <a href="dashboard.html">
                 <i class="fa-solid fa-chart-line"></i>
                 <span class="link-text">Dashboard</span>
@@ -116,6 +111,12 @@
                 <p>Pontos Gerados</p>
             </div>
 
+            <div class="stat-card">
+                <i class="fa-solid fa-box-archive"></i>
+                <h2 id="totalColetas">0</h2>
+                <p>Coletas Registradas</p>
+            </div>
+
         </section>
 
         <!-- META -->
@@ -138,23 +139,42 @@
 
         </section>
 
+        <!-- HISTÓRICO -->
 
+        <section class="history-card">
+
+            <h2>Últimas Reciclagens</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Latinhas</th>
+                        <th>Pontos</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="historicoBody">
+                    <tr><td colspan="3">Carregando...</td></tr>
+                </tbody>
+            </table>
+
+        </section>
 
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase.js"></script>
-    <script src="assets/js/role-guard.js"></script>
 
     <script>
         const META_MENSAL_LATINHAS = 300;
 
         async function carregarReciclagens() {
-            // Só usuário padrão e admin acessam esta tela.
-            const acesso = await protegerPagina(["usuario", "admin"]);
-            if (!acesso) return;
-
-            const userId = acesso.session.user.id;
+            const { data: { session } } = await client.auth.getSession();
+            if (!session) {
+                window.location.href = "login.html";
+                return;
+            }
+            const userId = session.user.id;
 
             const { data: perfil } = await client
                 .from("perfis")
@@ -165,8 +185,8 @@
             const totalLatinhas = perfil?.latinhas ?? 0;
             const totalPontos = perfil?.pontos ?? 0;
 
-            document.getElementById("totalLatinhas").textContent = totalLatinhas;
-            document.getElementById("totalPontos").textContent = totalPontos;
+            document.getElementById("totalLatinhas").textContent = totalLatinhas.toLocaleString("pt-BR");
+            document.getElementById("totalPontos").textContent = totalPontos.toLocaleString("pt-BR");
 
             // Meta mensal baseada no total de latinhas do perfil
             const percentual = Math.min(Math.round((totalLatinhas / META_MENSAL_LATINHAS) * 100), 100);
@@ -185,14 +205,11 @@
             const corpo = document.getElementById("historicoBody");
 
             if (error || !historico) {
-                if (corpo) corpo.innerHTML = `<tr><td colspan="3">Não foi possível carregar seu histórico.</td></tr>`;
+                corpo.innerHTML = `<tr><td colspan="3">Não foi possível carregar seu histórico.</td></tr>`;
                 return;
             }
 
-            const totalColetas = document.getElementById("totalColetas");
-            if (totalColetas) totalColetas.textContent = historico.length;
-
-            if (!corpo) return;
+            document.getElementById("totalColetas").textContent = historico.length;
 
             if (historico.length === 0) {
                 corpo.innerHTML = `<tr><td colspan="3">Você ainda não reciclou nada por aqui.</td></tr>`;
@@ -218,7 +235,6 @@
             window.location.href = "login.html";
         });
     </script>
-    <script src="assets/js/sidebar-role.js"></script>
     <script src="assets/js/sidebar-toggle.js"></script>
 </body>
 

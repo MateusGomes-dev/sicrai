@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <link rel="stylesheet" href="assets/css/sidebar-toggle.css">
-    <link rel="stylesheet" href="assets/css/toast.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
@@ -40,11 +39,6 @@
         </button>
 
         <nav>
-
-            <a href="mapa.html">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <span class="link-text">Mapa</span>
-            </a>
 
             <a href="dashboard.html">
                 <i class="fa-solid fa-chart-line"></i>
@@ -99,153 +93,146 @@
 
         <div class="store-grid">
 
-    <div class="store-card">
-        <i class="fa-solid fa-burger"></i>
-        <h3>Vale Lanche</h3>
-        <p>10 pontos</p>
-        <button data-pontos="10" data-nome="Vale Lanche">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-burger"></i>
+                <h3>Vale Lanche</h3>
+                <p>10 pontos</p>
+                <button data-pontos="10" data-nome="Vale Lanche">Resgatar</button>
+            </div>
 
-    <div class="store-card">
-        <i class="fa-solid fa-mug-hot"></i>
-        <h3>Caneca</h3>
-        <p>800 pontos</p>
-        <button data-pontos="800" data-nome="Caneca">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-mug-hot"></i>
+                <h3>Caneca</h3>
+                <p>800 pontos</p>
+                <button data-pontos="800" data-nome="Caneca">Resgatar</button>
+            </div>
 
-    <div class="store-card">
-        <i class="fa-solid fa-shirt"></i>
-        <h3>Camiseta</h3>
-        <p>1200 pontos</p>
-        <button data-pontos="1200" data-nome="Camiseta">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-shirt"></i>
+                <h3>Camiseta</h3>
+                <p>1200 pontos</p>
+                <button data-pontos="1200" data-nome="Camiseta">Resgatar</button>
+            </div>
 
-    <div class="store-card">
-        <i class="fa-solid fa-bottle-water"></i>
-        <h3>Garrafa Térmica</h3>
-        <p>1500 pontos</p>
-        <button data-pontos="1500" data-nome="Garrafa Térmica">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-bottle-water"></i>
+                <h3>Garrafa Térmica</h3>
+                <p>1500 pontos</p>
+                <button data-pontos="1500" data-nome="Garrafa Térmica">Resgatar</button>
+            </div>
 
-    <div class="store-card">
-        <i class="fa-solid fa-leaf"></i>
-        <h3>Kit Sustentável</h3>
-        <p>2000 pontos</p>
-        <button data-pontos="2000" data-nome="Kit Sustentável">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-leaf"></i>
+                <h3>Kit Sustentável</h3>
+                <p>2000 pontos</p>
+                <button data-pontos="2000" data-nome="Kit Sustentável">Resgatar</button>
+            </div>
 
-    <div class="store-card">
-        <i class="fa-solid fa-crown"></i>
-        <h3>Prêmio Premium</h3>
-        <p>5000 pontos</p>
-        <button data-pontos="5000" data-nome="Prêmio Premium">Resgatar</button>
-    </div>
+            <div class="store-card">
+                <i class="fa-solid fa-crown"></i>
+                <h3>Prêmio Premium</h3>
+                <p>5000 pontos</p>
+                <button data-pontos="5000" data-nome="Prêmio Premium">Resgatar</button>
+            </div>
 
-</div>
+        </div>
 
     </main>
 
-    <div class="toast-container" id="toastContainer"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/supabase.js"></script>
-<script src="assets/js/toast.js"></script>
-<script src="assets/js/role-guard.js"></script>
+    <script src="assets/js/supabase.js"></script>
 
-<script>
+    <script>
 
-    let pontosAtuais = 0;
+        let pontosAtuais = 0;
 
-    async function carregarPontos() {
-        // Só usuário padrão e admin acessam a loja de recompensas.
-        const acesso = await protegerPagina(["usuario", "admin"]);
-        if (!acesso) return;
-
-        const { data: { session } } = await client.auth.getSession();
-        if (!session) return;
-
-        const { data: perfil } = await client
-            .from("perfis")
-            .select("pontos")
-            .eq("id", session.user.id)
-            .single();
-
-        pontosAtuais = perfil?.pontos ?? 0;
-        document.getElementById("pontosDisponiveis").textContent = pontosAtuais.toLocaleString("pt-BR");
-
-        atualizarBotoes();
-    }
-
-    function atualizarBotoes() {
-        document.querySelectorAll(".store-card button").forEach(botao => {
-            const custo = parseInt(botao.dataset.pontos);
-            botao.disabled = pontosAtuais < custo;
-            botao.textContent = pontosAtuais < custo ? "Pontos insuficientes" : "Resgatar";
-        });
-    }
-
-    document.querySelectorAll(".store-card button").forEach(botao => {
-
-        botao.addEventListener("click", async () => {
-
-            const custo = parseInt(botao.dataset.pontos);
-            const nome = botao.dataset.nome;
-
-            if (pontosAtuais < custo) return;
-
-            const confirmar = await confirmarAcao(
-                `Resgatar "${nome}" por ${custo} pontos?`,
-                { titulo: "Confirmar resgate", textoConfirmar: "Resgatar" }
-            );
-            if (!confirmar) return;
-
-            botao.disabled = true;
-            botao.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Resgatando...`;
-
+        async function carregarPontos() {
             const { data: { session } } = await client.auth.getSession();
+            if (!session) {
+                window.location.href = "login.html";
+                return;
+            }
 
-            const { data: perfil, error: erroGet } = await client
+            const { data: perfil } = await client
                 .from("perfis")
                 .select("pontos")
                 .eq("id", session.user.id)
                 .single();
 
-            if (erroGet || !perfil || perfil.pontos < custo) {
-                mostrarToast("Pontos insuficientes para resgatar esta recompensa.", "aviso");
+            pontosAtuais = perfil?.pontos ?? 0;
+            document.getElementById("pontosDisponiveis").textContent = pontosAtuais.toLocaleString("pt-BR");
+
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            document.querySelectorAll(".store-card button").forEach(botao => {
+                const custo = parseInt(botao.dataset.pontos);
+                botao.disabled = pontosAtuais < custo;
+                botao.textContent = pontosAtuais < custo ? "Pontos insuficientes" : "Resgatar";
+            });
+        }
+
+        document.querySelectorAll(".store-card button").forEach(botao => {
+
+            botao.addEventListener("click", async () => {
+
+                const custo = parseInt(botao.dataset.pontos);
+                const nome = botao.dataset.nome;
+
+                if (pontosAtuais < custo) return;
+
+                const confirmar = confirm(`Resgatar "${nome}" por ${custo} pontos?`);
+                if (!confirmar) return;
+
+                botao.disabled = true;
+                botao.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Resgatando...`;
+
+                const { data: { session } } = await client.auth.getSession();
+
+                const { data: perfil, error: erroGet } = await client
+                    .from("perfis")
+                    .select("pontos")
+                    .eq("id", session.user.id)
+                    .single();
+
+                if (erroGet || !perfil || perfil.pontos < custo) {
+                    alert("Pontos insuficientes para resgatar esta recompensa.");
+                    await carregarPontos();
+                    return;
+                }
+
+                const novosPontos = perfil.pontos - custo;
+
+                const { error } = await client
+                    .from("perfis")
+                    .update({ pontos: novosPontos })
+                    .eq("id", session.user.id);
+
+                if (error) {
+                    alert("Erro ao resgatar recompensa. Tente novamente.");
+                    await carregarPontos();
+                    return;
+                }
+
+                alert(`🎉 "${nome}" resgatado com sucesso!`);
                 await carregarPontos();
-                return;
-            }
 
-            const novosPontos = perfil.pontos - custo;
-
-            const { error } = await client
-                .from("perfis")
-                .update({ pontos: novosPontos })
-                .eq("id", session.user.id);
-
-            if (error) {
-                mostrarToast("Erro ao resgatar recompensa. Tente novamente.", "erro");
-                await carregarPontos();
-                return;
-            }
-
-            mostrarToast(`🎉 "${nome}" resgatado com sucesso!`, "sucesso");
-            await carregarPontos();
+            });
 
         });
 
-    });
+        carregarPontos();
 
-    carregarPontos();
+        document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+            await client.auth.signOut();
+            window.location.href = "login.html";
+        });
 
-    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-        await client.auth.signOut();
-        window.location.href = "login.html";
-    });
+    </script>
 
-</script>
-<script src="assets/js/sidebar-role.js"></script>
-<script src="assets/js/sidebar-toggle.js"></script>
+    <!-- Incluído uma única vez (antes estava duplicado) -->
+    <script src="assets/js/sidebar-toggle.js"></script>
 
 </body>
 

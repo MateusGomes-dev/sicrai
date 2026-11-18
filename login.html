@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,69 +9,145 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/toast.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
 
-    <div class="auth-container">
+    <div class="login-page">
 
-        <div class="auth-card">
+        <!-- Lado esquerdo -->
+        <section class="login-brand">
+            <div class="brand-content">
 
-            <div class="auth-logo">
-                <i class="fa-solid fa-recycle"></i>
-                <h2>SICRAI</h2>
-            </div>
-
-            <h1>Entrar</h1>
-
-            <p>Acesse sua conta e acompanhe seus pontos.</p>
-
-            <form id="loginForm">
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Digite seu email"
-                        required>
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-recycle"></i>
+                    </div>
+                    <span>SICRAI</span>
                 </div>
 
-                <div class="input-group">
-                    <label>Senha</label>
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Digite sua senha"
-                        required>
+                <div class="brand-text">
+                    <h1>
+                        Reciclar hoje,
+                        <span>transformar o amanhã.</span>
+                    </h1>
+
+                    <p>
+                        Contribua para um futuro mais sustentável
+                        através da reciclagem inteligente.
+                    </p>
                 </div>
 
-                <button type="submit" class="btn-primary auth-btn">
-                    Entrar
-                </button>
+                <div class="brand-info">
+                    <div class="info-item">
+                        <i class="fa-solid fa-recycle"></i>
+                        <span>Recicle e ajude o meio ambiente</span>
+                    </div>
 
-            </form>
+                    <div class="info-item">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Ganhe pontos pelas suas reciclagens</span>
+                    </div>
 
-            <div class="auth-links">
-                <a href="esqueciSenha.html">Esqueci minha senha</a>
-                <a href="cadastro.html">Criar conta</a>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Encontre pontos de coleta</span>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="back-home">
-                <a href="index.html">
+            <div class="brand-footer">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Tecnologia a favor da sustentabilidade</span>
+            </div>
+        </section>
+
+        <!-- Lado direito -->
+        <section class="login-area">
+            <div class="login-card">
+
+                <div class="login-header">
+                    <span class="welcome-label">BEM-VINDO DE VOLTA</span>
+                    <h2>Entrar</h2>
+                    <p>Acesse sua conta e acompanhe seus pontos.</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="input-group">
+                        <label for="email">Email</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Digite seu email"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="password-label">
+                            <label for="password">Senha</label>
+
+                            <a href="esqueciSenha.html">
+                                Esqueci minha senha
+                            </a>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Digite sua senha"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                                aria-label="Mostrar senha"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton"
+                    >
+                        <span>Entrar</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+                <div class="register-link">
+                    <span>Ainda não possui uma conta?</span>
+                    <a href="cadastro.html">Criar conta</a>
+                </div>
+
+                <a href="index.html" class="back-home">
                     <i class="fa-solid fa-arrow-left"></i>
-                    Voltar ao início
+                    <span>Voltar ao início</span>
                 </a>
-            </div>
 
-        </div>
+            </div>
+        </section>
 
     </div>
 
@@ -84,29 +159,89 @@
     <script src="assets/js/role-guard.js"></script>
 
     <script>
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", async (e) => {
+        // Login normal
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-                e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const loginButton = document.getElementById("loginButton");
 
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
+            loginButton.disabled = true;
+            loginButton.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Entrando...</span>
+            `;
 
-                const { data, error } = await client.auth.signInWithPassword({
-                    email,
-                    password
-                });
-
-                if (error) {
-                    mostrarToast(error.message, "erro");
-                    return;
-                }
-
-                // Redireciona conforme o nível de acesso do usuário
-                const perfil = await obterPerfilComRole(data.user.id);
-                window.location.href = paginaInicialPorRole(perfil.role);
+            const { data, error } = await client.auth.signInWithPassword({
+                email,
+                password
             });
+
+            if (error) {
+                mostrarToast(error.message, "erro");
+
+                loginButton.disabled = false;
+                loginButton.innerHTML = `
+                    <span>Entrar</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                `;
+
+                return;
+            }
+
+            const perfil = await obterPerfilComRole(data.user.id);
+
+            if (!perfil || !perfil.role) {
+                mostrarToast(
+                    "Não foi possível encontrar o perfil do usuário.",
+                    "erro"
+                );
+
+                await client.auth.signOut();
+
+                loginButton.disabled = false;
+                loginButton.innerHTML = `
+                    <span>Entrar</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                `;
+
+                return;
+            }
+
+            window.location.href = paginaInicialPorRole(perfil.role);
+        });
+
+        // Mostrar / ocultar senha
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+            const tipo = passwordInput.getAttribute("type");
+
+            if (tipo === "password") {
+                passwordInput.setAttribute("type", "text");
+
+                togglePassword.innerHTML =
+                    '<i class="fa-solid fa-eye-slash"></i>';
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Ocultar senha"
+                );
+            } else {
+                passwordInput.setAttribute("type", "password");
+
+                togglePassword.innerHTML =
+                    '<i class="fa-solid fa-eye"></i>';
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Mostrar senha"
+                );
+            }
+        });
+
     </script>
 
 </body>

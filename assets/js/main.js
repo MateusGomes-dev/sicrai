@@ -3,18 +3,73 @@
 ===================================== */
 
 // MENU MOBILE
-const menuBtn = document.querySelector(".menu-mobile");
-const navLinks = document.querySelector(".nav-links");
+// Cria o ícone do menu automaticamente se a página não tiver um,
+// assim todas as páginas públicas funcionam sem mexer no HTML.
+(function iniciarMenuMobile() {
 
-if(menuBtn){
+    const navbar = document.querySelector(".navbar");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (!navbar || !navLinks) return;
+
+    let menuBtn = document.querySelector(".menu-mobile");
+
+    if (!menuBtn) {
+        menuBtn = document.createElement("div");
+        menuBtn.className = "menu-mobile";
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        navbar.appendChild(menuBtn);
+    }
+
+    menuBtn.setAttribute("role", "button");
+    menuBtn.setAttribute("tabindex", "0");
+    menuBtn.setAttribute("aria-label", "Abrir menu");
+
+    // Leva os botões Entrar / Cadastrar (escondidos no mobile) para dentro do menu
+    const navButtons = document.querySelector(".nav-buttons");
+
+    if (navButtons) {
+        navButtons.querySelectorAll("a").forEach(link => {
+            const li = document.createElement("li");
+            li.className = "nav-mobile-only";
+
+            const copia = link.cloneNode(true);
+            li.appendChild(copia);
+
+            navLinks.appendChild(li);
+        });
+    }
+
+    function definirMenu(aberto) {
+        navLinks.classList.toggle("active", aberto);
+        menuBtn.innerHTML = aberto
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+        menuBtn.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+    }
 
     menuBtn.addEventListener("click", () => {
-
-        navLinks.classList.toggle("active");
-
+        definirMenu(!navLinks.classList.contains("active"));
     });
 
-}
+    menuBtn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            definirMenu(!navLinks.classList.contains("active"));
+        }
+    });
+
+    // Fecha ao clicar em um link
+    navLinks.addEventListener("click", (e) => {
+        if (e.target.closest("a")) definirMenu(false);
+    });
+
+    // Fecha ao aumentar a tela
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 850) definirMenu(false);
+    });
+
+})();
 
 // ANIMAÇÃO AO SCROLL
 const observer = new IntersectionObserver((entries) => {
@@ -112,6 +167,7 @@ botaoTopo.innerHTML =
 '<i class="fa-solid fa-arrow-up"></i>';
 
 botaoTopo.classList.add("btn-top");
+botaoTopo.setAttribute("aria-label", "Voltar ao topo");
 
 document.body.appendChild(botaoTopo);
 
@@ -119,11 +175,11 @@ window.addEventListener("scroll", () => {
 
     if(window.scrollY > 300){
 
-        botaoTopo.style.opacity = "1";
+        botaoTopo.classList.add("visivel");
 
     }else{
 
-        botaoTopo.style.opacity = "0";
+        botaoTopo.classList.remove("visivel");
 
     }
 
